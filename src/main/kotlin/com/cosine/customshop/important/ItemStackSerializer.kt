@@ -10,7 +10,6 @@ import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
 
-
 class ItemStackSerializer {
 
     fun serialize(item: ItemStack): String {

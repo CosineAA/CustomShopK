@@ -21,24 +21,18 @@ class Config(plugin: JavaPlugin, fileName: String) {
         this.fileName = fileName
         val dataFolder: File = plugin.dataFolder
         this.file = File(dataFolder.toString() + File.separatorChar + this.fileName)
+        reloadConfig()
     }
 
     private fun reloadConfig() {
-        if (config == null) {
-            config = YamlConfiguration.loadConfiguration(InputStreamReader(FileInputStream(file), StandardCharsets.UTF_8))
-            val defConfigStream: Reader = InputStreamReader(plugin.getResource(this.fileName))
-            if (defConfigStream != null) {
-                val defConfig: YamlConfiguration = YamlConfiguration.loadConfiguration(defConfigStream)
-                config.defaults = defConfig
-            }
-        } else {
-            config.load(file)
+        config = YamlConfiguration.loadConfiguration(InputStreamReader(FileInputStream(file), StandardCharsets.UTF_8))
+        val defConfigStream: Reader = InputStreamReader(plugin.getResource(this.fileName))
+        if (defConfigStream != null) {
+            val defConfig: YamlConfiguration = YamlConfiguration.loadConfiguration(defConfigStream)
+            config.defaults = defConfig
         }
     }
     fun getConfig(): FileConfiguration {
-        if (config == null) {
-            reloadConfig()
-        }
         return this.config
     }
     fun saveDefaultConfig() {

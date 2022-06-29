@@ -7,6 +7,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 
 class Event(plugin: CustomShop): Listener {
@@ -36,9 +37,19 @@ class Event(plugin: CustomShop): Listener {
                     gui.openShopItemSetting(player, shop)
                 }
                 6 -> {
-
+                    gui.openShopPriceSetting(player, shop)
                 }
             }
+        }
+    }
+    @EventHandler
+    fun shop2(event: InventoryCloseEvent) {
+        val player: Player = event.player as Player
+        val inventory: Inventory = player.openInventory.topInventory
+
+        // 상점 저장 - 아이템
+        if (inventory.name.contains("§b§b§b")) {
+            val shop = replace(inventory.name)
         }
     }
     private fun replace(value: String): String {

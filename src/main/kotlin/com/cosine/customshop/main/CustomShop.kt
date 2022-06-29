@@ -13,7 +13,6 @@ import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.SQLException
 
-
 class CustomShop: JavaPlugin() {
 
     private lateinit var cp: HikariCP
@@ -28,13 +27,14 @@ class CustomShop: JavaPlugin() {
         config = Config(this, "config.yml")
         config.saveDefaultConfig()
 
-        gui = Gui(this)
-        item = ItemStackSerializer()
-
         createDataBase()
+
+        item = ItemStackSerializer()
 
         cp = HikariCP(this)
         sql = MySQL(this)
+
+        gui = Gui(this)
 
         server.pluginManager.registerEvents(Event(this), this)
         getCommand("상점").executor = Command(this)
@@ -42,6 +42,7 @@ class CustomShop: JavaPlugin() {
 
     override fun onDisable() {
         logger.info("커스텀 상점 플러그인 비활성화")
+        cp.closeConnection()
     }
     fun item(): ItemStackSerializer {
         return this.item
@@ -68,7 +69,7 @@ class CustomShop: JavaPlugin() {
         var connection: Connection? = null
         var ps: PreparedStatement? = null
         try {
-            connection = DriverManager.getConnection(getUrl(), getUrl(), getPassword())
+            connection = DriverManager.getConnection(getUrl(), getUser(), getPassword())
             ps = connection.prepareStatement(getUrl())
 
             val shop = "create database if not exists 상점"

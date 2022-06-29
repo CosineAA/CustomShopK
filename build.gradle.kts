@@ -10,15 +10,39 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven("https://papermc.io/repo/repository/maven-public/")
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("com.zaxxer:HikariCP:5.0.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
     compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
+    compileOnly("com.zaxxer:HikariCP:5.0.1")
+}
+
+val shade = configurations.create("shade")
+shade.extendsFrom(configurations.implementation.get())
+
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    jar {
+        from(
+            shade.map {
+                if (it.isDirectory)
+                    it
+                else
+                    zipTree(it)
+            }
+        )
+    }
 }
 
 tasks.test {

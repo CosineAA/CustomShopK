@@ -57,7 +57,7 @@ class MySQL(plugin: CustomShop) {
         var connection: Connection? = null
         var ps: PreparedStatement? = null
         var rs: ResultSet? = null
-        val create = "select count(*) from information_schema.tables where table_schema = '상점' and table_name = '$shop' "
+        val create = "select 1 from information_schema.tables where table_schema = '상점' and table_name = '$shop' "
         try {
             connection = cp.getConnection()
             ps = connection.prepareStatement(plugin.getUrl())

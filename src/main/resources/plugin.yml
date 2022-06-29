@@ -1,6 +1,7 @@
 name: CustomShop
-main: com.cosine.customshop.main
-version: '${project.version}'
+version: 1.0-SNAPSHOT
+main: com.cosine.customshop.main.CustomShop
+description: 커스텀 상점 플러그인
 
 commands:
   상점:
