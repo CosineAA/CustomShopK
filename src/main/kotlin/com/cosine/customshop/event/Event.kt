@@ -50,6 +50,7 @@ class Event(plugin: CustomShop): Listener {
         // 상점 저장 - 아이템
         if (inventory.name.contains("§b§b§b")) {
             val shop = replace(inventory.name)
+
         }
     }
     private fun replace(value: String): String {
