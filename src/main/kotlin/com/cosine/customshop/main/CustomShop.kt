@@ -2,8 +2,10 @@ package com.cosine.customshop.main
 
 import com.cosine.customshop.command.Command
 import com.cosine.customshop.event.Event
+import com.cosine.customshop.gui.Gui
 import com.cosine.customshop.important.Config
 import com.cosine.customshop.important.HikariCP
+import com.cosine.customshop.important.ItemStackSerializer
 import com.cosine.customshop.important.MySQL
 import org.bukkit.plugin.java.JavaPlugin
 import java.sql.Connection
@@ -17,6 +19,8 @@ class CustomShop: JavaPlugin() {
     private lateinit var cp: HikariCP
     private lateinit var config: Config
     private lateinit var sql: MySQL
+    private lateinit var gui: Gui
+    private lateinit var item: ItemStackSerializer
 
     override fun onEnable() {
         logger.info("커스텀 상점 플러그인 활성화")
@@ -24,21 +28,29 @@ class CustomShop: JavaPlugin() {
         config = Config(this, "config.yml")
         config.saveDefaultConfig()
 
+        gui = Gui(this)
+        item = ItemStackSerializer()
+
         createDataBase()
 
         cp = HikariCP(this)
-
         sql = MySQL(this)
 
-        server.pluginManager.registerEvents(Event(), this)
+        server.pluginManager.registerEvents(Event(this), this)
         getCommand("상점").executor = Command(this)
     }
 
     override fun onDisable() {
         logger.info("커스텀 상점 플러그인 비활성화")
     }
+    fun item(): ItemStackSerializer {
+        return this.item
+    }
+    fun gui(): Gui {
+        return this.gui
+    }
     fun cp(): HikariCP {
-        return this.cp;
+        return this.cp
     }
     fun sql(): MySQL {
         return this.sql

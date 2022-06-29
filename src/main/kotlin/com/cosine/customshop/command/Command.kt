@@ -1,5 +1,6 @@
 package com.cosine.customshop.command
 
+import com.cosine.customshop.gui.Gui
 import com.cosine.customshop.important.MySQL
 import com.cosine.customshop.main.CustomShop
 import org.bukkit.command.Command
@@ -11,10 +12,12 @@ class Command(plugin: CustomShop): CommandExecutor {
 
     private val plugin: CustomShop
     private val sql: MySQL
+    private val gui: Gui
 
     init {
         this.plugin = plugin
         sql = plugin.sql()
+        gui = plugin.gui()
     }
 
     private val option: String = "§6§l[ 상점 ] §f§l"
@@ -53,9 +56,23 @@ class Command(plugin: CustomShop): CommandExecutor {
                         }
                         sql.deleteShop(args[1])
                         player.sendMessage(option + "상점을 삭제하였습니다.")
-
                     }
                 }
+                "설정" -> {
+                    if (args.size == 1) {
+                        player.sendMessage(option + "상점 이름을 적어주세요.")
+                        return false
+                    }
+                    if (args.size == 2) {
+                        if (!sql.existShop(args[1])) {
+                            player.sendMessage(option + "존재하지 않는 상점입니다.")
+                            return false
+                        }
+                        gui.openShopMainSetting(player, args[1])
+                    }
+                }
+                "열기" -> {}
+                "목록" -> {}
                 else -> help(player)
             }
         }
