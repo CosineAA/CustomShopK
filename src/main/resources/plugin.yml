@@ -1,0 +1,6 @@
+name: CustomShop
+main: com.cosine.customshop.main
+version: '${project.version}'
+
+commands:
+  상점:
