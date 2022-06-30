@@ -34,7 +34,7 @@ class Gui(plugin: CustomShop) {
     fun openShopItemSetting(player: Player, shop: String) {
         val inventory: Inventory = Bukkit.createInventory(null, 54, "$shop 설정§b§b§b")
         for (loop: Int in 0..54) {
-            var item: ItemStack = sql.getShopItem(shop, loop)
+            val item: ItemStack = sql.getShopItem(shop, loop)
             if (item.type == Material.AIR) { continue }
             inventory.setItem(loop, item)
         }

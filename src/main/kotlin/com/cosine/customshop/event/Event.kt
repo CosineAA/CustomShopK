@@ -185,7 +185,7 @@ class Event(plugin: CustomShop): Listener {
     }
     private fun sellItem(player: Player, item: ItemStack, sellPrice: Int, economy: Economy?, offline: OfflinePlayer, choice: String) {
         var count = 0
-        count = if (choice == "전체") { countItem(player, item) } else { 1 }
+        count = if (choice == "전체") countItem(player, item) else 1
         item.amount = count
         player.inventory.removeItem(item)
 
