@@ -35,7 +35,7 @@ class Gui(plugin: CustomShop) {
         val inventory: Inventory = Bukkit.createInventory(null, 54, "$shop 설정§b§b§b")
         for (loop: Int in 0..54) {
             var item: ItemStack = sql.getShopItem(shop, loop)
-            if (item.type == Material.AIR) continue
+            if (item.type == Material.AIR) { continue }
             inventory.setItem(loop, item)
         }
         player.openInventory(inventory)
@@ -53,7 +53,7 @@ class Gui(plugin: CustomShop) {
     private fun setLore(inventory: Inventory, shop: String) {
         for (loop: Int in 0..54) {
             val item = ItemStack(sql.getShopItem(shop, loop))
-            if (item.type == Material.AIR) return
+            if (item.type == Material.AIR) { return }
             val meta: ItemMeta = item.itemMeta
             val lore: MutableList<String> = meta.lore
 

@@ -25,7 +25,9 @@ class Command(plugin: CustomShop): CommandExecutor {
     override fun onCommand(sender: CommandSender?, command: Command?, label: String?, args: Array<out String>?): Boolean {
         if (sender is Player) {
             val player: Player = sender
-            if (!player.isOp) return false
+            if (!player.isOp) {
+                return false
+            }
             if (args?.size == 0) {
                 help(player)
                 return false
@@ -90,7 +92,7 @@ class Command(plugin: CustomShop): CommandExecutor {
                     }
                 }
                 "목록" -> {}
-                else -> help(player)
+                else -> { help(player) }
             }
         }
         return false
