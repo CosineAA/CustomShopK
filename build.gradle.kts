@@ -20,8 +20,8 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
     compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
-    compileOnly("com.zaxxer:HikariCP:5.0.1")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    implementation("com.zaxxer:HikariCP:4.0.3")
 }
 
 val shade = configurations.create("shade")
@@ -36,6 +36,7 @@ tasks {
     }
 
     jar {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
         from(
             shade.map {
                 if (it.isDirectory)
