@@ -8,9 +8,7 @@ import com.cosine.customshop.important.HikariCP
 import com.cosine.customshop.important.ItemStackSerializer
 import com.cosine.customshop.important.MySQL
 import org.bukkit.plugin.java.JavaPlugin
-import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.PreparedStatement
 import java.sql.SQLException
 
 class CustomShop: JavaPlugin() {
@@ -44,6 +42,16 @@ class CustomShop: JavaPlugin() {
         logger.info("커스텀 상점 플러그인 비활성화")
         cp.closeConnection()
     }
+    private fun createDataBase() {
+        try {
+            DriverManager.getConnection(getUrl(), getUser(), getPassword()).use { connection -> connection.prepareStatement(getUrl()).use { ps ->
+                val shop = "create database if not exists 상점"
+                ps.executeUpdate(shop)
+            }}
+        } catch (e: SQLException) {
+            e.printStackTrace()
+        }
+    }
     fun item(): ItemStackSerializer {
         return this.item
     }
@@ -64,21 +72,5 @@ class CustomShop: JavaPlugin() {
     }
     fun getPassword(): String {
         return config.getConfig().getString("MySQL.password")
-    }
-    private fun createDataBase() {
-        var connection: Connection? = null
-        var ps: PreparedStatement? = null
-        try {
-            connection = DriverManager.getConnection(getUrl(), getUser(), getPassword())
-            ps = connection.prepareStatement(getUrl())
-
-            val shop = "create database if not exists 상점"
-            ps.executeUpdate(shop)
-        } catch (e: SQLException) {
-            e.printStackTrace()
-        } finally {
-            connection?.close()
-            ps?.close()
-        }
     }
 }

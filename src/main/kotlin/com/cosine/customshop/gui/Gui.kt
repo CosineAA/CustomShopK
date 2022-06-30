@@ -34,7 +34,7 @@ class Gui(plugin: CustomShop) {
     fun openShopItemSetting(player: Player, shop: String) {
         val inventory: Inventory = Bukkit.createInventory(null, 54, "$shop 설정§b§b§b")
         for (loop: Int in 0..54) {
-            var item: ItemStack = sql.getShopItem(loop, shop)
+            var item: ItemStack = sql.getShopItem(shop, loop)
             if (item.type == Material.AIR) continue
             inventory.setItem(loop, item)
         }
@@ -43,7 +43,7 @@ class Gui(plugin: CustomShop) {
     fun openShopPriceSetting(player: Player, shop: String) {
         val inventory: Inventory = Bukkit.createInventory(null, 54, "$shop 설정§c§c§c")
         for (loop: Int in 0..54) {
-            val item: ItemStack = sql.getShopItem(loop, shop)
+            val item: ItemStack = sql.getShopItem(shop, loop)
             if (item.type == Material.AIR) return
             val meta: ItemMeta = item.itemMeta
             val lore: MutableList<String> = meta.lore
@@ -64,7 +64,7 @@ class Gui(plugin: CustomShop) {
         player.openInventory(inventory)
     }
     private fun getPrice(choice: String, loop: Int, shop: String): String {
-        val price: Int = sql.getShopValue(choice + "가격", loop, shop)
+        val price: Int = sql.getShopValue(choice + "가격", shop, loop)
         if (price == 0) {
             return choice + "불가"
         }
