@@ -11,9 +11,8 @@ import net.milkbowl.vault.economy.Economy
 import org.bukkit.plugin.java.JavaPlugin
 import java.sql.DriverManager
 import java.sql.SQLException
-
-
-object CustomShop: JavaPlugin() {
+// Copyright 2022. 코사인(Cosine_A) all rights reserved.
+class CustomShop: JavaPlugin() {
 
     private lateinit var cp: HikariCP
     private lateinit var config: Config

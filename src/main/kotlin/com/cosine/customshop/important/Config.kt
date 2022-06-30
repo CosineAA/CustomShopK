@@ -8,7 +8,7 @@ import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.io.Reader
 import java.nio.charset.StandardCharsets
-
+// Copyright 2022. 코사인(Cosine_A) all rights reserved.
 class Config(plugin: JavaPlugin, fileName: String) {
 
     private var fileName: String

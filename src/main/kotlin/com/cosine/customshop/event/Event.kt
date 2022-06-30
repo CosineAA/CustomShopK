@@ -14,7 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import java.util.*
-
+// Copyright 2022. 코사인(Cosine_A) all rights reserved.
 class Event(plugin: CustomShop): Listener {
 
     private val plugin: CustomShop
@@ -74,7 +74,7 @@ class Event(plugin: CustomShop): Listener {
 
             val shop = replace(inventory.name)
 
-            val economy: Economy? = CustomShop.getEconomy()
+            val economy: Economy? = plugin.getEconomy()
             val offline: OfflinePlayer = Bukkit.getOfflinePlayer(player.uniqueId)
             val playerBank: Double? = economy?.getBalance(offline)
 

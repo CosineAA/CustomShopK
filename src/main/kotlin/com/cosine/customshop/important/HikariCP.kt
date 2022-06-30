@@ -4,7 +4,7 @@ import com.cosine.customshop.main.CustomShop
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import java.sql.Connection
-
+// Copyright 2022. 코사인(Cosine_A) all rights reserved.
 class HikariCP(plugin: CustomShop) {
 
     private val config: HikariConfig = HikariConfig()

@@ -7,7 +7,7 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-
+// Copyright 2022. 코사인(Cosine_A) all rights reserved.
 class Command(plugin: CustomShop): CommandExecutor {
 
     private val plugin: CustomShop

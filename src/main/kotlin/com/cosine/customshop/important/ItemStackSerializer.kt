@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
-
+// Copyright 2022. 코사인(Cosine_A) all rights reserved.
 class ItemStackSerializer {
 
     fun serialize(item: ItemStack): String {

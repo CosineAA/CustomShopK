@@ -9,7 +9,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.material.MaterialData
-
+// Copyright 2022. 코사인(Cosine_A) all rights reserved.
 class Gui(plugin: CustomShop) {
 
     private val sql: MySQL

@@ -4,8 +4,7 @@ import com.cosine.customshop.main.CustomShop
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import java.sql.SQLException
-
-
+// Copyright 2022. 코사인(Cosine_A) all rights reserved.
 class MySQL(plugin: CustomShop) {
 
     private val plugin: CustomShop
