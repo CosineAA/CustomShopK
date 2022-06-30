@@ -107,12 +107,12 @@ class Event(plugin: CustomShop): Listener {
                 return
             }
             if (event.isRightClick) {
+                if (!player.inventory.containsAtLeast(item, 1)) {
+                    player.sendMessage(option + "판매할 아이템이 부족합니다.")
+                    return
+                }
                 val sellPrice: Int = sql.getShopValue("판매가격", shop, slot)
                 if (event.isShiftClick) {
-                    if (!player.inventory.containsAtLeast(item, 1)) {
-                        player.sendMessage(option + "판매할 아이템이 부족합니다.")
-                        return
-                    }
                     sellItem(player, item, sellPrice, economy, offline, "전체")
                     return
                 }
