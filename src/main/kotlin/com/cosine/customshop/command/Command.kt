@@ -25,6 +25,7 @@ class Command(plugin: CustomShop): CommandExecutor {
     override fun onCommand(sender: CommandSender?, command: Command?, label: String?, args: Array<out String>?): Boolean {
         if (sender is Player) {
             val player: Player = sender
+            if (!player.isOp) return false
             if (args?.size == 0) {
                 help(player)
                 return false
@@ -38,6 +39,10 @@ class Command(plugin: CustomShop): CommandExecutor {
                     if (args.size == 2) {
                         if (sql.existShop(args[1])) {
                             player.sendMessage(option + "이미 존재하는 상점입니다.")
+                            return false
+                        }
+                        if (args[1].contains("상점") || args[1].contains("설정")) {
+                            player.sendMessage(option + "금지어가 포함되어 있습니다.")
                             return false
                         }
                         sql.createShop(args[1])
@@ -71,7 +76,19 @@ class Command(plugin: CustomShop): CommandExecutor {
                         gui.openShopMainSetting(player, args[1])
                     }
                 }
-                "열기" -> {}
+                "열기" -> {
+                    if (args.size == 1) {
+                        player.sendMessage(option + "상점 이름을 적어주세요.")
+                        return false
+                    }
+                    if (args.size == 2) {
+                        if (!sql.existShop(args[1])) {
+                            player.sendMessage(option + "존재하지 않는 상점입니다.")
+                            return false
+                        }
+                        gui.openShop(player, args[1])
+                    }
+                }
                 "목록" -> {}
                 else -> help(player)
             }

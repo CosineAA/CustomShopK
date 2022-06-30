@@ -7,20 +7,27 @@ import com.cosine.customshop.important.Config
 import com.cosine.customshop.important.HikariCP
 import com.cosine.customshop.important.ItemStackSerializer
 import com.cosine.customshop.important.MySQL
+import net.milkbowl.vault.economy.Economy
 import org.bukkit.plugin.java.JavaPlugin
 import java.sql.DriverManager
 import java.sql.SQLException
 
-class CustomShop: JavaPlugin() {
+
+object CustomShop: JavaPlugin() {
 
     private lateinit var cp: HikariCP
     private lateinit var config: Config
     private lateinit var sql: MySQL
     private lateinit var gui: Gui
     private lateinit var item: ItemStackSerializer
+    private var economy: Economy? = null
 
     override fun onEnable() {
         logger.info("커스텀 상점 플러그인 활성화")
+
+        if (!setupEconomy()) {
+            logger.info("Vault 플러그인을 찾을 수 없습니다.")
+        }
 
         config = Config(this, "config.yml")
         config.saveDefaultConfig()
@@ -72,5 +79,18 @@ class CustomShop: JavaPlugin() {
     }
     fun getPassword(): String {
         return config.getConfig().getString("MySQL.password")
+    }
+    private fun setupEconomy(): Boolean {
+        if (server.pluginManager.getPlugin("Vault") == null) {
+            return false
+        }
+        val rsp = server.servicesManager.getRegistration(
+            Economy::class.java
+        ) ?: return false
+        economy = rsp.provider
+        return economy != null
+    }
+    fun getEconomy(): Economy? {
+        return economy
     }
 }

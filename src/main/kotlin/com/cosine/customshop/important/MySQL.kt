@@ -21,7 +21,7 @@ class MySQL(plugin: CustomShop) {
     fun createShop(shop: String) {
         try {
             cp.getConnection().use { connection ->  connection.prepareStatement(plugin.getUrl()).use { ps ->
-                val create = "create table if not exists $shop (슬롯 int, 구매가격 int, 판매가격 int, 구매수량 int, 판매수량 int, 아이템 varchar(1000));"
+                val create = "create table if not exists $shop (슬롯 int, 구매가격 int, 판매가격 int, 아이템 varchar(1000));"
                 ps.execute(create)
             }}
         } catch (e: SQLException) {

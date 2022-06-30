@@ -11,6 +11,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -20,6 +21,7 @@ dependencies {
 
     compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
     compileOnly("com.zaxxer:HikariCP:5.0.1")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 }
 
 val shade = configurations.create("shade")
