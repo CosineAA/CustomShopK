@@ -120,40 +120,6 @@ class Event(plugin: CustomShop): Listener {
             }
         }
     }
-    private fun countItem(player: Player, item: ItemStack): Int {
-        var count = 0
-        val inventory: Inventory = player.inventory
-        for (items: ItemStack in inventory.all(item).values) {
-            if (items.type == item.type) {
-                count += items.amount
-            }
-        }
-        return count;
-    }
-    private fun sellItem(player: Player, item: ItemStack, sellPrice: Int, economy: Economy?, offline: OfflinePlayer, choice: String) {
-        var count = 0
-        count = if (choice == "전체") countItem(player, item) else 1
-        item.amount = count
-        player.inventory.removeItem(item)
-
-        economy?.depositPlayer(offline, sellPrice.toDouble() * count)
-
-        val money = economy?.format(economy.getBalance(offline))
-
-        player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1F, 2F)
-        player.sendMessage(option + "아이템을 $choice 판매하였습니다. §7[돈: $money]")
-    }
-    private fun buyItem(player: Player, item: ItemStack, buyAmount: Int, buyPrice: Int, economy: Economy, offline: OfflinePlayer) {
-        item.amount = buyAmount
-        player.inventory.addItem(item)
-
-        economy.withdrawPlayer(offline, buyPrice.toDouble() * buyAmount)
-
-        val money = economy.format(economy.getBalance(offline))
-
-        player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1F, 2F)
-        player.sendMessage(option + "아이템을 " + buyAmount + "개를 구매하였습니다. §7[돈: $money)]");
-    }
     @EventHandler
     fun setShop2(event: AsyncPlayerChatEvent) {
         val player: Player = event.player
@@ -206,6 +172,40 @@ class Event(plugin: CustomShop): Listener {
             sql.setShopValue(chat.toInt(), "판매가격", shop, slot)
             player.sendMessage(option + "판매 가격을 설정하였습니다.")
         }
+    }
+    private fun countItem(player: Player, item: ItemStack): Int {
+        var count = 0
+        val inventory: Inventory = player.inventory
+        for (items: ItemStack in inventory.all(item).values) {
+            if (items.type == item.type) {
+                count += items.amount
+            }
+        }
+        return count;
+    }
+    private fun sellItem(player: Player, item: ItemStack, sellPrice: Int, economy: Economy?, offline: OfflinePlayer, choice: String) {
+        var count = 0
+        count = if (choice == "전체") countItem(player, item) else 1
+        item.amount = count
+        player.inventory.removeItem(item)
+
+        economy?.depositPlayer(offline, sellPrice.toDouble() * count)
+
+        val money = economy?.format(economy.getBalance(offline))
+
+        player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1F, 2F)
+        player.sendMessage(option + "아이템을 $choice 판매하였습니다. §7[돈: $money]")
+    }
+    private fun buyItem(player: Player, item: ItemStack, buyAmount: Int, buyPrice: Int, economy: Economy, offline: OfflinePlayer) {
+        item.amount = buyAmount
+        player.inventory.addItem(item)
+
+        economy.withdrawPlayer(offline, buyPrice.toDouble() * buyAmount)
+
+        val money = economy.format(economy.getBalance(offline))
+
+        player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1F, 2F)
+        player.sendMessage(option + "아이템을 " + buyAmount + "개를 구매하였습니다. §7[돈: $money)]");
     }
     private fun getList(player: Player, choice: String, shop: String, slot: Int, boolean: Boolean): MutableList<Any> {
         player.closeInventory()
